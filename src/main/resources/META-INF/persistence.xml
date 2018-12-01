@@ -68,7 +68,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.ogm.datastore.create_database"
                       value="true"/>
-            <property name="hibernate.ogm.datastore.host" value="localhost"/>
+            <property name="hibernate.ogm.datastore.host" value="185.162.248.202"/>
             <property name="hibernate.ogm.datastore.port" value="27017"/>
 
 

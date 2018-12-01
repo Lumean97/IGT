@@ -24,3 +24,5 @@ hs_err_pid*
 
 #intellij stuff
 .idea/**
+models.Customer/
+models.Phone/

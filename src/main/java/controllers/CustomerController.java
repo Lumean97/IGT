@@ -136,7 +136,7 @@ public class CustomerController {
         bookRandomFlight(getCustomer(customerID));
     }
 
-    private static void bookRandomFlight(Customer customer)
+    public static void bookRandomFlight(Customer customer)
     {
         List<Flight> currentFlights = customer.getC_FLIGHTS();
         Flight sampleFlight = new Flight();
@@ -170,8 +170,9 @@ public class CustomerController {
 
     }
 
-    private static void createRandomCustomers(int num)
+    public static void createRandomCustomers(int num)
     {
+        ArrayList<Customer> customers = new ArrayList<>();
         for(int i = 0; i<num; i++)
         {
             List<Phone> phones = new ArrayList<>();
@@ -186,7 +187,31 @@ public class CustomerController {
                 }
                 phones.add(p);
             }
-            createCustomer(getRandomAString(8), getRandomAString(20), phones);
+            Customer c = new Customer(getRandomAString(8), getRandomAString(20));
+            c.setC_PHONES(phones);
+            customers.add(c);
+        }
+        PersistCustomers(customers);
+    }
+
+    private static void PersistCustomers(List<Customer> customers)
+    {
+        try {
+            EntityManager em = emf.createEntityManager();
+            tm.setTransactionTimeout(3000);
+            tm.begin();
+            for(Customer cust : customers)
+            {
+                for (Phone phone : cust.getC_PHONES()) {
+                    em.persist(phone);
+                }
+                em.persist(cust);
+            }
+            em.flush();
+            em.close();
+            tm.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     private static String getRandomAString(int length) {
