@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import tools.Config;
 
 import static org.junit.Assert.assertEquals;
 
@@ -52,9 +53,9 @@ public class CustomerControllerTest {
     @Test
     public void testC_getAllCustomerTest() {
 
-        CustomerController.createRandomCustomers(100);;
+        CustomerController.createRandomCustomers(Config.NUMBER_OF_CUSTOMERS);;
         ArrayList<Customer> cList = (ArrayList<Customer>) CustomerController.getAllCustomersAsList();
-        assertEquals(100, cList.size(), 0.0001);
+        assertEquals(Config.NUMBER_OF_CUSTOMERS, cList.size(), 0.0001);
 
 
     }
