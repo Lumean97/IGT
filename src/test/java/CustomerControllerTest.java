@@ -88,19 +88,11 @@ public class CustomerControllerTest {
 
     }
 
-    @Ignore
     @Test(expected = NullPointerException.class)
     public void testF_deleteCustomerTest() {
 
 
-
-        Customer cTest = CustomerController.getCustomer(1);
-
         CustomerController.deleteCustomer(1);
-
-        cTest = CustomerController.getCustomer(1);
-
-        cTest.getC_ID();
 
         //fail("NullPointerException");
 

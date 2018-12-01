@@ -6,7 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.transaction.TransactionManager;
+import javax.transaction.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,15 @@ public class CustomerController {
             em.flush();
             em.close();
             tm.commit();
-        } catch (Exception e) {
+        } catch (NotSupportedException e) {
+            e.printStackTrace();
+        } catch (SystemException e) {
+            e.printStackTrace();
+        } catch (HeuristicMixedException e) {
+            e.printStackTrace();
+        } catch (HeuristicRollbackException e) {
+            e.printStackTrace();
+        } catch (RollbackException e) {
             e.printStackTrace();
         }
         return cust;
@@ -57,7 +66,15 @@ public class CustomerController {
             em.flush();
             em.close();
             tm.commit();
-        } catch (Exception e) {
+        } catch (NotSupportedException e) {
+            e.printStackTrace();
+        } catch (SystemException e) {
+            e.printStackTrace();
+        } catch (HeuristicMixedException e) {
+            e.printStackTrace();
+        } catch (HeuristicRollbackException e) {
+            e.printStackTrace();
+        } catch (RollbackException e) {
             e.printStackTrace();
         }
         return retval;
@@ -86,7 +103,15 @@ public class CustomerController {
             em.flush();
             em.close();
             tm.commit();
-        } catch (Exception e) {
+        } catch (NotSupportedException e) {
+            e.printStackTrace();
+        } catch (SystemException e) {
+            e.printStackTrace();
+        } catch (HeuristicMixedException e) {
+            e.printStackTrace();
+        } catch (HeuristicRollbackException e) {
+            e.printStackTrace();
+        } catch (RollbackException e) {
             e.printStackTrace();
         }
         return customers;
@@ -101,24 +126,45 @@ public class CustomerController {
             em.flush();
             em.close();
             tm.commit();
-        } catch (Exception e) {
+        } catch (NotSupportedException e) {
+            e.printStackTrace();
+        } catch (SystemException e) {
+            e.printStackTrace();
+        } catch (HeuristicMixedException e) {
+            e.printStackTrace();
+        } catch (HeuristicRollbackException e) {
+            e.printStackTrace();
+        } catch (RollbackException e) {
             e.printStackTrace();
         }
     }
 
 
-    public static void deleteCustomer(Integer CustomerID)
+    public static void deleteCustomer(Integer CustomerID) throws NullPointerException
     {
         try {
             EntityManager em = emf.createEntityManager();
             tm.setTransactionTimeout(3000);
             tm.begin();
             Customer cust = em.find(Customer.class, CustomerID);
-            em.remove(cust);
+            if(cust == null)
+            {
+                throw new NullPointerException("Customer with ID " + CustomerID + " couldn't be found.");
+            }else{
+                em.remove(cust);
+            }
             em.flush();
             em.close();
             tm.commit();
-        } catch (Exception e) {
+        }catch (NotSupportedException e) {
+            e.printStackTrace();
+        } catch (SystemException e) {
+            e.printStackTrace();
+        } catch (HeuristicMixedException e) {
+            e.printStackTrace();
+        } catch (HeuristicRollbackException e) {
+            e.printStackTrace();
+        } catch (RollbackException e) {
             e.printStackTrace();
         }
     }
@@ -162,7 +208,15 @@ public class CustomerController {
             em.flush();
             em.close();
             tm.commit();
-        } catch (Exception e) {
+        } catch (NotSupportedException e) {
+            e.printStackTrace();
+        } catch (SystemException e) {
+            e.printStackTrace();
+        } catch (HeuristicMixedException e) {
+            e.printStackTrace();
+        } catch (HeuristicRollbackException e) {
+            e.printStackTrace();
+        } catch (RollbackException e) {
             e.printStackTrace();
         }
 
@@ -210,7 +264,15 @@ public class CustomerController {
             em.flush();
             em.close();
             tm.commit();
-        } catch (Exception e) {
+        } catch (NotSupportedException e) {
+            e.printStackTrace();
+        } catch (SystemException e) {
+            e.printStackTrace();
+        } catch (HeuristicMixedException e) {
+            e.printStackTrace();
+        } catch (HeuristicRollbackException e) {
+            e.printStackTrace();
+        } catch (RollbackException e) {
             e.printStackTrace();
         }
     }
