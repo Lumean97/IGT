@@ -17,17 +17,18 @@ public class CustomerController {
     public static EntityManagerFactory emf = Persistence.createEntityManagerFactory("OGM_MONGODB");
     public static TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
 
+    private static CustomerController instance = null;
 
-    public static void main(String[] args) {
-        deleteAllCustomers();
-        createRandomCustomers(1);
-        for(Customer c : getAllCustomersAsList())
+    private CustomerController(){}
+    public static CustomerController getInstance(){
+        if(instance == null)
         {
-            bookRandomFlight(c);
-            System.out.println(c);
+            instance = new CustomerController();
         }
+        return instance;
     }
-    public static Customer createCustomer(String name, String address, List<Phone> phones)
+
+    public Customer createCustomer(String name, String address, List<Phone> phones)
     {
         Customer cust = new Customer(name, address);
         cust.setC_PHONES(phones);
@@ -56,7 +57,7 @@ public class CustomerController {
         }
         return cust;
     }
-    public static Customer getCustomer(Integer C_ID) {
+    public Customer getCustomer(Integer C_ID) {
         Customer retval = null;
         try {
             EntityManager em = emf.createEntityManager();
@@ -79,7 +80,7 @@ public class CustomerController {
         }
         return retval;
     }
-    public static List<Integer> getAllCustomerIDs()
+    public List<Integer> getAllCustomerIDs()
     {
         List<Integer> retval = new ArrayList<>();
         for(Customer c : getAllCustomersAsList())
@@ -89,7 +90,7 @@ public class CustomerController {
         return retval;
     }
 
-    public static List<Customer> getAllCustomersAsList()
+    public List<Customer> getAllCustomersAsList()
     {
         List<Customer> customers = new ArrayList<>();
         try {
@@ -117,7 +118,7 @@ public class CustomerController {
         return customers;
     }
 
-    public static void updateCustomer(Customer customer) {
+    public void updateCustomer(Customer customer) {
         try {
             EntityManager em = emf.createEntityManager();
             tm.setTransactionTimeout(3000);
@@ -140,7 +141,7 @@ public class CustomerController {
     }
 
 
-    public static void deleteCustomer(Integer CustomerID) throws NullPointerException
+    public void deleteCustomer(Integer CustomerID) throws NullPointerException
     {
         try {
             EntityManager em = emf.createEntityManager();
@@ -169,7 +170,7 @@ public class CustomerController {
         }
     }
 
-    public static void deleteAllCustomers()
+    public void deleteAllCustomers()
     {
         for(Integer id : getAllCustomerIDs()){
             deleteCustomer(id);
@@ -177,12 +178,12 @@ public class CustomerController {
     }
 
 
-    private static void bookRandomFlight(Integer customerID)
+    private void bookRandomFlight(Integer customerID)
     {
         bookRandomFlight(getCustomer(customerID));
     }
 
-    public static void bookRandomFlight(Customer customer)
+    public void bookRandomFlight(Customer customer)
     {
         List<Flight> currentFlights = customer.getC_FLIGHTS();
         Flight sampleFlight = new Flight();
@@ -224,7 +225,7 @@ public class CustomerController {
 
     }
 
-    public static void createRandomCustomers(int num)
+    public void createRandomCustomers(int num)
     {
         ArrayList<Customer> customers = new ArrayList<>();
         for(int i = 0; i<num; i++)
@@ -248,7 +249,7 @@ public class CustomerController {
         PersistCustomers(customers);
     }
 
-    private static void PersistCustomers(List<Customer> customers)
+    private void PersistCustomers(List<Customer> customers)
     {
         try {
             EntityManager em = emf.createEntityManager();
@@ -276,7 +277,7 @@ public class CustomerController {
             e.printStackTrace();
         }
     }
-    private static String getRandomAString(int length) {
+    private String getRandomAString(int length) {
         String newstring = new String();
         int i;
         final char[] chars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',

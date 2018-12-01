@@ -1,60 +1,59 @@
 import controllers.CustomerController;
-import models.Airport;
 import models.Customer;
 import models.Phone;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import tools.Config;
 
 import java.util.ArrayList;
 import java.util.List;
-import tools.Config;
 
 import static org.junit.Assert.assertEquals;
 
 public class CustomerControllerTest {
 
+    CustomerController customerController;
+
+    private boolean setupIsDone = false;
 
     @Before
     public void setUp() throws Exception {
 
-
-        CustomerController.deleteAllCustomers();
-
-        
-
+        if (!setupIsDone) {
+            customerController = CustomerController.getInstance();
+        }
+        customerController.deleteAllCustomers();
     }
 
     @After
     public void tearDown() throws Exception {
 
 
-
-
     }
 
-  
+
     @Test
     public void read_Test() {
 
         List<Phone> phones = new ArrayList<>();
         phones.add(new Phone());
-        CustomerController.createCustomer("Harry", "Legusterweg 4", phones);
-        System.out.println(CustomerController.getAllCustomerIDs());
-        Customer cTest = CustomerController.getAllCustomersAsList().get(0);
+        customerController.createCustomer("Harry", "Legusterweg 4", phones);
+        System.out.println(customerController.getAllCustomerIDs());
+        Customer cTest = customerController.getAllCustomersAsList().get(0);
         System.out.println(cTest.getC_NAME());
         assertEquals("Harry", cTest.getC_NAME());
 
 
     }
 
-   
+
     @Test
     public void testC_getAllCustomerTest() {
 
-        CustomerController.createRandomCustomers(Config.NUMBER_OF_CUSTOMERS);;
-        ArrayList<Customer> cList = (ArrayList<Customer>) CustomerController.getAllCustomersAsList();
+        customerController.createRandomCustomers(Config.NUMBER_OF_CUSTOMERS);
+        ;
+        ArrayList<Customer> cList = (ArrayList<Customer>) customerController.getAllCustomersAsList();
         assertEquals(Config.NUMBER_OF_CUSTOMERS, cList.size(), 0.0001);
 
 
@@ -64,8 +63,8 @@ public class CustomerControllerTest {
     public void update_Test() {
         Customer custTest = null;
 
-        CustomerController.createRandomCustomers(2);;
-        List<Integer> cIDs = CustomerController.getAllCustomerIDs();
+        customerController.createRandomCustomers(2);
+        List<Integer> cIDs = customerController.getAllCustomerIDs();
         List<Customer> customersToUpdate = new ArrayList<Customer>();
         for (Integer id : cIDs) {
             //find a customer to update
@@ -77,13 +76,13 @@ public class CustomerControllerTest {
             cTest.setC_MILES_YEAR(30);
             cTest.setC_NAME("Thomas");
             cTest.setC_ADDR("Linguster Weg 4");
-            
-            CustomerController.updateCustomer(cTest);
+
+            customerController.updateCustomer(cTest);
         }
-        
+
         //retrieve an updated customer from the datastore
-        custTest = CustomerController.getCustomer(cIDs.get(0));
-        
+        custTest = customerController.getCustomer(cIDs.get(0));
+
         assertEquals(99, custTest.getC_MILES_ALL(), 0.0001);
 
 
@@ -93,32 +92,31 @@ public class CustomerControllerTest {
     public void testF_deleteCustomerTest() {
 
 
-        CustomerController.deleteCustomer(1);
+        customerController.deleteCustomer(1);
 
         //fail("NullPointerException");
 
     }
 
-  
-    @Test 
+
+    @Test
     public void testH_bookFlightTest() {
 
-        CustomerController.createRandomCustomers(1);;
-    	Customer selectedCustomer = CustomerController.getAllCustomersAsList().get(0);
-    	CustomerController.bookRandomFlight(selectedCustomer);
-    	assertEquals(1, selectedCustomer.getC_FLIGHTS().size(), 0.0001);
+        customerController.createRandomCustomers(1);
+        ;
+        Customer selectedCustomer = customerController.getAllCustomersAsList().get(0);
+        customerController.bookRandomFlight(selectedCustomer);
+        assertEquals(1, selectedCustomer.getC_FLIGHTS().size(), 0.0001);
     }
-   
+
     @Test
     public void delete_Test() {
 
 
-        CustomerController.deleteAllCustomers();
+        customerController.deleteAllCustomers();
 
 
     }
-    
-    
 
 
 }
