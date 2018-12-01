@@ -1,0 +1,128 @@
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://java.sun.com/xml/ns/persistence"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <!--
+
+        <persistence-unit name="ogm-mysql" transaction-type="JTA">
+            <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
+            <properties>
+                <property name="hibernate.archive.autodetection" value="class" />
+                <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+                <property name="hibernate.connection.url"
+                          value="jdbc:mysql://localhost:3306/ogm_hibernate?createDatabaseIfNotExist=true" />
+                <property name="hibernate.connection.username" value="root" />
+                <property name="hibernate.connection.password" value="jenskohler" />
+
+                <property name="hibernate.flushMode" value="FLUSH_AUTO" />
+                <property name="hibernate.hbm2ddl.auto" value="create" />
+                <property name="hibernate.show_sql" value="true" />
+            </properties>
+        </persistence-unit>
+    -->
+
+    <persistence-unit name="OGM_MYSQL" transaction-type="JTA">
+        <description>
+            Persistence unit for the JPA tutorial of the Hibernate Getting Started Guide
+        </description>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>de.hsma.jens.models.Customer</class>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost:3306/ogm_hibernate?createDatabaseIfNotExist=TRUE&amp;useSSL=false"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="jenskohler"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+        </properties>
+
+    </persistence-unit>
+
+
+    <persistence-unit name="OGM_POSTGRESQL" transaction-type="JTA">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="hibernate.archive.autodetection" value="class"/>
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/postgres"/>
+            <property name="hibernate.connection.username" value="postgres"/>
+            <property name="hibernate.connection.password" value="jenskohler"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <!--    <property name="hibernate.connection.isolation" value="SERIALIZABLE" /> -->
+            <!--  <property name="hibernate.connection.isolation" value="READ_COMMITTED" /> -->
+
+
+        </properties>
+    </persistence-unit>
+
+    <persistence-unit name="OGM_MONGODB" transaction-type="JTA">
+        <!-- Use the Hibernate OGM provider: configuration will be transparent -->
+        <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
+
+        <properties>
+            <property name="hibernate.ogm.datastore.provider"
+                      value="mongodb"/>
+            <property name="hibernate.ogm.datastore.database" value="ogm_hibernate"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.ogm.datastore.create_database"
+                      value="true"/>
+            <property name="hibernate.ogm.datastore.host" value="localhost"/>
+            <property name="hibernate.ogm.datastore.port" value="27017"/>
+
+
+        </properties>
+    </persistence-unit>
+
+    <persistence-unit name="OGM_NEO4J" transaction-type="JTA">
+        <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.ogm.datastore.provider" value="neo4j_bolt"/>
+            <property name="hibernate.ogm.datastore.host" value="localhost:7687"/>
+            <property name="hibernate.ogm.datastore.username" value="neo4j"/>
+            <property name="hibernate.ogm.datastore.password" value="jenskohler"/>
+        </properties>
+    </persistence-unit>
+
+
+    <persistence-unit name="OGM_INFINISPAN" transaction-type="JTA">
+        <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
+        <properties>
+            <property name="hibernate.ogm.datastore.provider" value="infinispan"/>
+        </properties>
+    </persistence-unit>
+
+
+    <persistence-unit name="OGM_CASSANDRA"
+                      transaction-type="JTA">
+
+        <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
+        <properties>
+
+            <property name="hibernate.ogm.datastore.provider" value="cassandra_experimental"/>
+            <property name="hibernate.ogm.datastore.host" value="localhost:9042"/>
+            <property name="hibernate.ogm.datastore.database" value="ogm_hibernate"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+        </properties>
+    </persistence-unit>
+
+
+    <persistence-unit name="OGM_REDIS" transaction-type="JTA">
+        <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.ogm.datastore.provider" value="redis_experimental"/>
+            <property name="hibernate.ogm.datastore.host" value="localhost:6379"/>
+            <!-- <property name="hibernate.ogm.redis.ttl" value="-1" /> -->
+            <property name="hibernate.ogm.redis.ssl" value="false"/>
+            <property name="hibernate.ogm.redis.cluster" value="false"/>
+            <!-- <property name="hibernate.ogm.datastore.grid_dialect" value="org.hibernate.ogm.datastore.redis.RedisHashDialect" /> -->
+            <property name="hibernate.ogm.datastore.grid_dialect"
+                      value="org.hibernate.ogm.datastore.redis.RedisJsonDialect"/>
+        </properties>
+    </persistence-unit>
+
+
+</persistence>
