@@ -1,7 +1,6 @@
 import controllers.CustomerController;
 import models.Customer;
 import models.Phone;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import tools.Config;
@@ -26,11 +25,6 @@ public class CustomerControllerTest {
         customerController.deleteAllCustomers();
     }
 
-    @After
-    public void tearDown() throws Exception {
-
-
-    }
 
 
     @Test

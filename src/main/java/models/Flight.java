@@ -1,7 +1,10 @@
 package models;
 
+import controllers.FlightController;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +57,8 @@ public class Flight implements Serializable {
         F_PLANE_TYPE = "BOEING";
         F_SEATS_E = 150;
         F_SEATS_F = 25;
+        C_ID = new ArrayList<>();
+        F_FS = new ArrayList<>();
     }
 
     public void setF_START_TIME(Date f_START_TIME) {
@@ -138,7 +143,7 @@ public class Flight implements Serializable {
 
     public String toString()
     {
-        String retval = "Flug Nummer " + F_ID + " von " + F_FS.get(0) + " nach " + F_FS.get(F_FS.size()-1) + " mit dem Flieger " + F_PLANE_TYPE + ".\n";
+        String retval = "Flug Nummer " + F_ID + " von " + FlightController.getInstance().getStartAirport(this) + " nach " + FlightController.getInstance().getEndAirport(this) + " mit dem Flieger " + F_PLANE_TYPE + ".\n";
         retval += "Der Flug besitzt " + F_SEATS_E + " Sitze in der Economy Class, und " + F_SEATS_F + " Sitze in der ersten Klasse.\n";
         retval += "In der Economy Class kostet ein Sitz " + F_PRICE_E + "€. In der ersten Klasse " + F_PRICE_F + ".\n";
         retval += "Der Flug wird voraussichtlich " + F_START_TIME + " starten, und " + F_LANDING_TIME + " landen.";

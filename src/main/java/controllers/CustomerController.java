@@ -183,6 +183,15 @@ public class CustomerController {
         bookRandomFlight(getCustomer(customerID));
     }
 
+    public void bookFlight(Flight flight, Customer customer)
+    {
+        customer.getC_FLIGHTS().add(flight);
+        flight.getC_ID().add(customer);
+        flight.setF_SEATS_E(flight.getF_SEATS_F());
+        updateCustomer(customer);
+        FlightController.getInstance().updateFlight(flight);
+    }
+
     public void bookRandomFlight(Customer customer)
     {
         List<Flight> currentFlights = customer.getC_FLIGHTS();

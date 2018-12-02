@@ -4,6 +4,7 @@ import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -50,6 +51,8 @@ public class Customer implements Serializable {
         C_ID = (int) (Math.random() * 100000);
         C_NAME = name;
         C_ADDR = address;
+        C_FLIGHTS = new ArrayList<>();
+        C_PHONES = new ArrayList<>();
     }
 
     public void setC_FLIGHTS(List<Flight> c_FLIGHTS) {

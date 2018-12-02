@@ -2,6 +2,7 @@ package models;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,7 @@ public class FlightSegment implements Serializable {
     private List<Flight> F_FLIGHTS;
 
     public FlightSegment(){
-
+        F_FLIGHTS = new ArrayList<>();
     }
 
     public String toString()
@@ -32,6 +33,7 @@ public class FlightSegment implements Serializable {
         FS_ID = (int) (Math.random() * 100000);
         FS_START_ID = start;
         FS_END_ID = end;
+        F_FLIGHTS = new ArrayList<>();
     }
 
     public void setFS_ID(Integer FS_ID) {

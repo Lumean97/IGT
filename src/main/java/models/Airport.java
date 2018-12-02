@@ -2,6 +2,7 @@ package models;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,7 +27,8 @@ public class Airport  implements Serializable {
 
     public Airport()
     {
-
+        A_FS_START = new ArrayList<>();
+        A_FS_END = new ArrayList<>();
     }
 
     public Airport(String name, String place)
@@ -34,6 +36,8 @@ public class Airport  implements Serializable {
         A_ID = (int) (Math.random() * 100000);
         A_NAME = name;
         A_PLACE = place;
+        A_FS_START = new ArrayList<>();
+        A_FS_END = new ArrayList<>();
     }
 
     public void setA_ID(Integer a_ID) {
@@ -74,5 +78,11 @@ public class Airport  implements Serializable {
 
     public List<FlightSegment> getA_FS_END() {
         return A_FS_END;
+    }
+
+
+    public String toString()
+    {
+        return A_PLACE + ", Flughafen " + A_NAME;
     }
 }
