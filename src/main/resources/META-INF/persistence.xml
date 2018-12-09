@@ -26,14 +26,17 @@
             Persistence unit for the JPA tutorial of the Hibernate Getting Started Guide
         </description>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>de.hsma.jens.models.Customer</class>
+        <class>models.Customer</class>
+        <class>models.Airport</class>
+        <class>models.Flight</class>
+        <class>models.FlightSegment</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/ogm_hibernate?createDatabaseIfNotExist=TRUE&amp;useSSL=false"/>
+                      value="jdbc:mysql://mysql:3306/ogm_hibernate?createDatabaseIfNotExist=TRUE&amp;useSSL=false"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="jenskohler"/>
+            <property name="javax.persistence.jdbc.password" value="igt"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
 
         </properties>
@@ -46,9 +49,9 @@
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/postgres"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://postgresql:5432/postgres"/>
             <property name="hibernate.connection.username" value="postgres"/>
-            <property name="hibernate.connection.password" value="jenskohler"/>
+            <property name="hibernate.connection.password" value="igt"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <!--    <property name="hibernate.connection.isolation" value="SERIALIZABLE" /> -->
             <!--  <property name="hibernate.connection.isolation" value="READ_COMMITTED" /> -->
@@ -68,7 +71,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.ogm.datastore.create_database"
                       value="true"/>
-            <property name="hibernate.ogm.datastore.host" value="185.162.248.202"/>
+            <property name="hibernate.ogm.datastore.host" value="mongodb"/>
             <property name="hibernate.ogm.datastore.port" value="27017"/>
 
 
@@ -80,7 +83,7 @@
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.ogm.datastore.provider" value="neo4j_bolt"/>
-            <property name="hibernate.ogm.datastore.host" value="localhost:7687"/>
+            <property name="hibernate.ogm.datastore.host" value="neo4j:7687"/>
             <property name="hibernate.ogm.datastore.username" value="neo4j"/>
             <property name="hibernate.ogm.datastore.password" value="jenskohler"/>
         </properties>
@@ -102,7 +105,7 @@
         <properties>
 
             <property name="hibernate.ogm.datastore.provider" value="cassandra_experimental"/>
-            <property name="hibernate.ogm.datastore.host" value="localhost:9042"/>
+            <property name="hibernate.ogm.datastore.host" value="cassandra:9042"/>
             <property name="hibernate.ogm.datastore.database" value="ogm_hibernate"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
         </properties>

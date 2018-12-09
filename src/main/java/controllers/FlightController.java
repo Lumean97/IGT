@@ -4,6 +4,7 @@ import models.Airport;
 import models.Customer;
 import models.Flight;
 import models.FlightSegment;
+import tools.Config;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class FlightController {
 
-    public EntityManagerFactory emf = Persistence.createEntityManagerFactory("OGM_MONGODB");
+    public EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT_NAME);
     public TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
 
     private static FlightController instance = null;
@@ -144,6 +145,15 @@ public class FlightController {
             e.printStackTrace();
         }
         return flights;
+    }
+
+    public String getFlightData(Flight flight){
+        System.out.println("To String called");
+        String retval = "Flug Nummer " + flight.getF_ID() + " von " + FlightController.getInstance().getStartAirport(flight) + " nach " + FlightController.getInstance().getEndAirport(flight) + " mit dem Flieger " + flight.getF_PLANE_TYPE() + ".\n";
+        retval += "Der Flug besitzt " + flight.getF_SEATS_E() + " Sitze in der Economy Class, und " + flight.getF_SEATS_F() + " Sitze in der ersten Klasse.\n";
+        retval += "In der Economy Class kostet ein Sitz " + flight.getF_PRICE_E() + "€. In der ersten Klasse " + flight.getF_PRICE_F() + ".\n";
+        retval += "Der Flug wird voraussichtlich " + flight.getF_START_TIME() + " starten, und " + flight.getF_LANDING_TIME() + " landen.";
+        return retval;
     }
 
 }

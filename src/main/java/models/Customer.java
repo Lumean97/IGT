@@ -1,5 +1,6 @@
 package models;
 
+import controllers.FlightController;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
@@ -119,18 +120,7 @@ public class Customer implements Serializable {
         return C_ADDR;
     }
 
-    public String toString(){
-        String retval = "Der Kunde " + C_NAME + ", wohnhaft in " + C_ADDR + " ist bisher " + C_MILES_ALL + " Meilen geflogen, davon " + C_MILES_YEAR + " alleine dieses Jahr. Er hat den Rang " + C_STATE + " und folgende Telefonnummern: ";
-        for (Phone phone : C_PHONES) {
-            retval += "\n " + phone.getP_NUMBER();
-        }
-        retval += "\n Hier seine Flugdaten:";
-        for(Flight flight : C_FLIGHTS)
-        {
-            retval += "\n" + flight;
-        }
-        return retval;
-    }
+
 
     public enum CustomerRank {
         NONE,

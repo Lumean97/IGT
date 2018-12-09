@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Airport;
+import tools.Config;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,7 +11,7 @@ import javax.transaction.*;
 public class AirportController {
 
     private static AirportController instance;
-    public EntityManagerFactory emf = Persistence.createEntityManagerFactory("OGM_MONGODB");
+    public EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT_NAME);
     public TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
 
     private AirportController(){}

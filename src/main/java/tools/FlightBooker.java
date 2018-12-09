@@ -5,6 +5,9 @@ import controllers.FlightController;
 import models.Customer;
 import models.Flight;
 import models.Phone;
+import org.apache.commons.logging.impl.Log4JLogger;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +17,6 @@ public class FlightBooker {
 
     static Scanner s = new Scanner(System.in);
     public static void main(String[] args){
-
-
 
         CustomerController customerController = CustomerController.getInstance();
 
@@ -44,7 +45,7 @@ public class FlightBooker {
         System.out.println("Bitte wählen Sie einen Flug aus.");
         for(int i = 0; i<flights.size(); i++)
         {
-            System.out.println(i + "\n " + flights.get(i));
+            System.out.println(i + "\n " + flightController.getFlightData(flights.get(i)));
         }
         bookedFlight = flights.get(s.nextInt());
         System.out.println("Sehr schön, ich buche diesen Flug für Sie!");

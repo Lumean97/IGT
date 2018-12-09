@@ -24,10 +24,6 @@ public class FlightSegment implements Serializable {
         F_FLIGHTS = new ArrayList<>();
     }
 
-    public String toString()
-    {
-        return "Not implemented Yet!";
-    }
 
     public FlightSegment(Integer start, Integer end) {
         FS_ID = (int) (Math.random() * 100000);

@@ -37,7 +37,7 @@ public class Flight implements Serializable {
 
 
 
-    @ManyToMany(mappedBy = "C_FLIGHTS")
+    @ManyToMany(mappedBy = "C_FLIGHTS", fetch = FetchType.EAGER)
     private List<Customer> C_ID;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -139,14 +139,5 @@ public class Flight implements Serializable {
 
     public List<FlightSegment> getF_FS() {
         return F_FS;
-    }
-
-    public String toString()
-    {
-        String retval = "Flug Nummer " + F_ID + " von " + FlightController.getInstance().getStartAirport(this) + " nach " + FlightController.getInstance().getEndAirport(this) + " mit dem Flieger " + F_PLANE_TYPE + ".\n";
-        retval += "Der Flug besitzt " + F_SEATS_E + " Sitze in der Economy Class, und " + F_SEATS_F + " Sitze in der ersten Klasse.\n";
-        retval += "In der Economy Class kostet ein Sitz " + F_PRICE_E + "€. In der ersten Klasse " + F_PRICE_F + ".\n";
-        retval += "Der Flug wird voraussichtlich " + F_START_TIME + " starten, und " + F_LANDING_TIME + " landen.";
-        return retval;
     }
 }

@@ -1,6 +1,7 @@
 package controllers;
 
 import models.*;
+import tools.Config;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,7 +15,7 @@ import java.util.List;
 public class CustomerController {
 
 
-    public static EntityManagerFactory emf = Persistence.createEntityManagerFactory("OGM_MONGODB");
+    public static EntityManagerFactory emf = Persistence.createEntityManagerFactory(Config.PERSISTENCE_UNIT_NAME);
     public static TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
 
     private static CustomerController instance = null;
@@ -256,6 +257,19 @@ public class CustomerController {
             customers.add(c);
         }
         PersistCustomers(customers);
+    }
+
+    public String getCustomerData(Customer customer){
+        String retval = "Der Kunde " + customer.getC_NAME() + ", wohnhaft in " + customer.getC_ADDR() + " ist bisher " + customer.getC_MILES_ALL() + " Meilen geflogen, davon " + customer.getC_MILES_YEAR() + " alleine dieses Jahr. Er hat den Rang " + customer.getC_STATE() + " und folgende Telefonnummern: ";
+        for (Phone phone : customer.getC_PHONES()) {
+            retval += "\n " + phone.getP_NUMBER();
+        }
+        retval += "\n Hier seine Flugdaten:";
+        for(Flight flight : customer.getC_FLIGHTS())
+        {
+            retval += "\n" + FlightController.getInstance().getFlightData(flight);
+        }
+        return retval;
     }
 
     private void PersistCustomers(List<Customer> customers)

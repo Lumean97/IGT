@@ -1,0 +1,53 @@
+version: '3'
+services:
+  ogm:
+    build: .
+    env_file: hosts.env
+    depends_on:
+    - mongodb
+    - postgresql
+    - neo4j
+    - cassandra
+  mongodb:
+    restart: always
+    image: mongo:latest
+    container_name: "mongodb"
+    ports:
+    - "27017:27017"
+    volumes:
+    - 'mongo:/data/mongodb'
+    logging:
+      driver: "none"
+  postgresql:
+    restart: always
+    image: postgres:latest
+    container_name: "postgresql"
+    ports:
+    - "5432:5432"
+    volumes:
+    - 'postgresql:/data/postgresql'
+  neo4j:
+    restart: always
+    image: neo4j:latest
+    container_name: "neo4j"
+    ports:
+    - "7687:7687"
+    volumes:
+    - 'neo4j:/data/neo4j'
+    logging:
+      driver: "none"
+  cassandra:
+    restart: always
+    image: cassandra:latest
+    container_name: "cassandra"
+    ports:
+    - "9042:9042"
+    volumes:
+    - 'cassandra:/data/cassandra'
+    logging:
+      driver: "none"
+volumes:
+  mongo:
+  postgresql:
+  neo4j:
+  cassandra:
