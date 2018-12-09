@@ -1,11 +1,14 @@
 package models;
 
+import org.hibernate.search.annotations.Indexed;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Indexed
 @Table(name = "FLIGHT_SEGMENT")
 public class FlightSegment implements Serializable {
     @Id

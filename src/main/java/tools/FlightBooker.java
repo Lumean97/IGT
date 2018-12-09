@@ -5,9 +5,6 @@ import controllers.FlightController;
 import models.Customer;
 import models.Flight;
 import models.Phone;
-import org.apache.commons.logging.impl.Log4JLogger;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +16,9 @@ public class FlightBooker {
     public static void main(String[] args){
 
         CustomerController customerController = CustomerController.getInstance();
-
+        customerController.createRandomCustomers(1);
+        Customer selectedCustomer = customerController.getAllCustomersAsList().get(0);
+        customerController.bookRandomFlight(selectedCustomer);
         FlightController flightController = FlightController.getInstance();
         System.out.println("Guten Tag bei IntegratedAirlines. Sind Sie: \n 1 Neukunde \n 2 Bestandskunde");
         String choice = s.nextLine();

@@ -1,6 +1,6 @@
 package models;
 
-import controllers.FlightController;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Indexed
 @Table(name = "FLIGHT")
 public class Flight implements Serializable {
     @Id

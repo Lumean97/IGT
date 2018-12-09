@@ -71,7 +71,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.ogm.datastore.create_database"
                       value="true"/>
-            <property name="hibernate.ogm.datastore.host" value="mongodb"/>
+            <property name="hibernate.ogm.datastore.host" value="localhost"/>
             <property name="hibernate.ogm.datastore.port" value="27017"/>
 
 
@@ -83,9 +83,9 @@
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.ogm.datastore.provider" value="neo4j_bolt"/>
-            <property name="hibernate.ogm.datastore.host" value="neo4j:7687"/>
+            <property name="hibernate.ogm.datastore.host" value="localhost:7687"/>
             <property name="hibernate.ogm.datastore.username" value="neo4j"/>
-            <property name="hibernate.ogm.datastore.password" value="jenskohler"/>
+            <property name="hibernate.ogm.datastore.password" value="igt"/>
         </properties>
     </persistence-unit>
 
@@ -105,7 +105,7 @@
         <properties>
 
             <property name="hibernate.ogm.datastore.provider" value="cassandra_experimental"/>
-            <property name="hibernate.ogm.datastore.host" value="cassandra:9042"/>
+            <property name="hibernate.ogm.datastore.host" value="localhost:9042"/>
             <property name="hibernate.ogm.datastore.database" value="ogm_hibernate"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
         </properties>

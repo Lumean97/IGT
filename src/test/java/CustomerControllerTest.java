@@ -1,11 +1,12 @@
 import controllers.CustomerController;
 import models.Customer;
 import models.Phone;
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import tools.Config;
 
+import javax.transaction.TransactionManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,6 @@ public class CustomerControllerTest {
 
 
 
-    @Ignore
     @Test
     public void read_Test() {
 
@@ -44,7 +44,6 @@ public class CustomerControllerTest {
     }
 
 
-    @Ignore
     @Test
     public void testC_getAllCustomerTest() {
 
@@ -56,7 +55,6 @@ public class CustomerControllerTest {
 
     }
 
-    @Ignore
     @Test
     public void update_Test() {
         Customer custTest = null;
@@ -86,7 +84,6 @@ public class CustomerControllerTest {
 
     }
 
-    @Ignore
     @Test(expected = NullPointerException.class)
     public void testF_deleteCustomerTest() {
 
@@ -98,7 +95,6 @@ public class CustomerControllerTest {
     }
 
 
-    @Ignore
     @Test
     public void testH_bookFlightTest() {
 
@@ -109,7 +105,6 @@ public class CustomerControllerTest {
         assertEquals(1, selectedCustomer.getC_FLIGHTS().size(), 0.0001);
     }
 
-    @Ignore
     @Test
     public void delete_Test() {
 
@@ -117,6 +112,19 @@ public class CustomerControllerTest {
         customerController.deleteAllCustomers();
 
 
+    }
+
+    @Test
+    public void TestNestedTransaction() throws javax.transaction.SystemException{
+        TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
+        tm.setTransactionTimeout(1000);
+        try {
+            tm.begin();
+            tm.begin();
+            Assert.fail("Nested transactions should fail!");
+        } catch(javax.transaction.NotSupportedException expectedException) {
+
+        }
     }
 
 

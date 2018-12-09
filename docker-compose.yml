@@ -1,13 +1,5 @@
-version: '3'
+version: '3.7'
 services:
-  ogm:
-    build: .
-    env_file: hosts.env
-    depends_on:
-    - mongodb
-    - postgresql
-    - neo4j
-    - cassandra
   mongodb:
     restart: always
     image: mongo:latest
@@ -16,26 +8,23 @@ services:
     - "27017:27017"
     volumes:
     - 'mongo:/data/mongodb'
-    logging:
-      driver: "none"
-  postgresql:
+  redis:
     restart: always
-    image: postgres:latest
-    container_name: "postgresql"
+    image: redis:latest
+    container_name: "redis"
     ports:
-    - "5432:5432"
+    - "6379:6379"
     volumes:
-    - 'postgresql:/data/postgresql'
+    - 'redis:/data/redis'
   neo4j:
     restart: always
     image: neo4j:latest
     container_name: "neo4j"
     ports:
     - "7687:7687"
+    - "7474:7474"
     volumes:
     - 'neo4j:/data/neo4j'
-    logging:
-      driver: "none"
   cassandra:
     restart: always
     image: cassandra:latest
@@ -44,10 +33,8 @@ services:
     - "9042:9042"
     volumes:
     - 'cassandra:/data/cassandra'
-    logging:
-      driver: "none"
 volumes:
   mongo:
-  postgresql:
+  redis:
   neo4j:
   cassandra:
