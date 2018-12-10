@@ -78,6 +78,24 @@
         </properties>
     </persistence-unit>
 
+    <persistence-unit name="OGM_MONGODB_PERFORMANCE" transaction-type="JTA">
+        <!-- Use the Hibernate OGM provider: configuration will be transparent -->
+        <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
+
+        <properties>
+            <property name="hibernate.ogm.datastore.provider"
+                      value="mongodb"/>
+            <property name="hibernate.ogm.datastore.database" value="ogm_hibernate"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.ogm.datastore.create_database"
+                      value="true"/>
+            <property name="hibernate.ogm.datastore.host" value="localhost"/>
+            <property name="hibernate.ogm.datastore.port" value="27018"/>
+
+
+        </properties>
+    </persistence-unit>
+
     <persistence-unit name="OGM_NEO4J" transaction-type="JTA">
         <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>

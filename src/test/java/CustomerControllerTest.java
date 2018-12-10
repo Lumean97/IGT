@@ -1,12 +1,15 @@
 import controllers.CustomerController;
 import models.Customer;
+import models.Performance;
 import models.Phone;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import tools.Config;
+import tools.PerformanceMeasure;
 
-import javax.transaction.TransactionManager;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.transaction.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,18 +18,17 @@ import static org.junit.Assert.assertEquals;
 public class CustomerControllerTest {
 
     CustomerController customerController;
+    public static Performance performanceModell = new Performance();
 
     private boolean setupIsDone = false;
 
     @Before
     public void setUp() throws Exception {
 
-        if (!setupIsDone) {
-            customerController = CustomerController.getInstance();
-        }
+        customerController = CustomerController.getInstance();
         customerController.deleteAllCustomers();
+        PerformanceMeasure.StartMeasureMent();
     }
-
 
 
     @Test
@@ -35,12 +37,9 @@ public class CustomerControllerTest {
         List<Phone> phones = new ArrayList<>();
         phones.add(new Phone());
         customerController.createCustomer("Harry", "Legusterweg 4", phones);
-        System.out.println(customerController.getAllCustomerIDs());
         Customer cTest = customerController.getAllCustomersAsList().get(0);
-        System.out.println(cTest.getC_NAME());
         assertEquals("Harry", cTest.getC_NAME());
-
-
+        performanceModell.setM_READ(PerformanceMeasure.GetTimeStamp());
     }
 
 
@@ -48,9 +47,9 @@ public class CustomerControllerTest {
     public void testC_getAllCustomerTest() {
 
         customerController.createRandomCustomers(Config.NUMBER_OF_CUSTOMERS);
-        ;
         ArrayList<Customer> cList = (ArrayList<Customer>) customerController.getAllCustomersAsList();
         assertEquals(Config.NUMBER_OF_CUSTOMERS, cList.size(), 0.0001);
+        performanceModell.setM_GET_ALL(PerformanceMeasure.GetTimeStamp());
 
 
     }
@@ -80,9 +79,21 @@ public class CustomerControllerTest {
         custTest = customerController.getCustomer(cIDs.get(0));
 
         assertEquals(99, custTest.getC_MILES_ALL(), 0.0001);
+        performanceModell.setM_UPDATE(PerformanceMeasure.GetTimeStamp());
 
 
     }
+
+    @Test
+    public void delete_Test() {
+
+
+        customerController.deleteAllCustomers();
+        performanceModell.setM_DELETE(PerformanceMeasure.GetTimeStamp());
+
+
+    }
+
 
     @Test(expected = NullPointerException.class)
     public void testF_deleteCustomerTest() {
@@ -90,8 +101,8 @@ public class CustomerControllerTest {
 
         customerController.deleteCustomer(1);
 
-        //fail("NullPointerException");
 
+        Assert.fail("Deletion shouldn't be possible");
     }
 
 
@@ -103,28 +114,43 @@ public class CustomerControllerTest {
         Customer selectedCustomer = customerController.getAllCustomersAsList().get(0);
         customerController.bookRandomFlight(selectedCustomer);
         assertEquals(1, selectedCustomer.getC_FLIGHTS().size(), 0.0001);
+        performanceModell.setM_BOOK(PerformanceMeasure.GetTimeStamp());
     }
 
-    @Test
-    public void delete_Test() {
 
-
-        customerController.deleteAllCustomers();
-
-
-    }
-
-    @Test
-    public void TestNestedTransaction() throws javax.transaction.SystemException{
+    @Ignore
+    @Test(expected = javax.transaction.NotSupportedException.class)
+    public void TestNestedTransaction() throws javax.transaction.SystemException, javax.transaction.NotSupportedException {
         TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
         tm.setTransactionTimeout(1000);
-        try {
-            tm.begin();
-            tm.begin();
-            Assert.fail("Nested transactions should fail!");
-        } catch(javax.transaction.NotSupportedException expectedException) {
+        tm.begin();
+        tm.begin();
+        Assert.fail("Nested transactions should fail!");
+    }
 
+    @AfterClass
+    public static void tearDown() {
+        System.out.println("Tear Down");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("OGM_MONGODB");
+        TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
+        try {
+            EntityManager em = emf.createEntityManager();
+            tm.setTransactionTimeout(3000);
+            em.merge(performanceModell);
+
+            em.flush();
+            em.close();
+            tm.commit();
+        } catch (SystemException e) {
+            e.printStackTrace();
+        } catch (HeuristicMixedException e) {
+            e.printStackTrace();
+        } catch (HeuristicRollbackException e) {
+            e.printStackTrace();
+        } catch (RollbackException e) {
+            e.printStackTrace();
         }
+
     }
 
 
